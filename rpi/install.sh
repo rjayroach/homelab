@@ -36,11 +36,9 @@ sudo apt autoremove
 
 sudo add user pi to /etc/group # login again
 
-
-mkdir -p ~/Documents/career/portainer
-cd ~/Documents/career/portainer
-wget github.com/rjayroach/portainer/docker-compose.yml
-
 docker volume create portainer_data
+
+# Next steps:
+cd portainer
 docker-compose up
 

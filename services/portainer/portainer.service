@@ -1,0 +1,21 @@
+# Run portainer at boot
+# https://blog.container-solutions.com/running-docker-containers-with-systemd
+
+[Unit]
+Description=Portainer container
+After=docker.service
+Requires=docker.service
+# Unit=portainer
+
+[Service]
+TimeoutStartSec=0
+Restart=always
+ExecStartPre=-/usr/bin/docker stop portainer
+ExecStartPre=-/usr/bin/docker rm portainer
+ExecStartPre=/usr/bin/docker pull portainer/portainer-ce
+ExecStart=/usr/bin/docker run -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
+# ExecStop=/usr/bin/docker stop -t 2 --name=portainer
+ExecStop=/usr/bin/docker stop -t 2 --name=portainer
+
+[Install]
+WantedBy=multi-user.target

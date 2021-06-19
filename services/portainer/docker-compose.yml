@@ -1,0 +1,17 @@
+
+version: '3.2'
+
+volumes:
+  portainer_data:
+
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    ports:
+      - "8000:8000"
+      - "9000:9000"
+    command: -H unix:///var/run/docker.sock
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    restart: always
